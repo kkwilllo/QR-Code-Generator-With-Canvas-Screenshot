@@ -1,0 +1,85 @@
+<html>
+<head>
+	<title>Javascript QR Code Generator With Snapshot</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript" src="qrcode.js"></script>
+	<script type="text/javascript" src="canvas2image.js"></script>
+	<script type="text/javascript" src="html2canvas.js"></script>
+
+	<style>
+		.specific {
+		  background-color: #fff;
+		  width: 300px; 
+		  height: 400px;
+		  margin-left: auto;
+		  margin-right: auto;
+		}
+	</style>
+
+
+</head>
+<body>
+
+<!--For testing only: <input id="text" type="text" value="myid_is_inputed_here" style="width:80%" /><br /><!-- -->
+
+<div class="specific">
+	<div id="output_qrcode" style="width:300px; height:300px; margin-top:15px; margin-bottom:15px;"></div>
+	<div id="output_id" style="width:300px; height:20px; margin-top:10px; margin-bottom:10px;text-align:center;"></div>
+	<div id="output_devicename" style="width:300px; height:20px; margin-top:10px; margin-bottom:10px;text-align:center;"></div>
+</div>
+
+<button type="button" class="btn btn-default">Download</button>
+
+<!----------------------------------------------------------------------------------------------------------------------->
+
+<script type="text/javascript">
+var input_QRCode_ID = "04231"
+var input_QRCode_DeviceName = "Test1"
+
+var output_qrcode = new QRCode(document.getElementById("output_qrcode"), {
+	width : 300,
+	height : 300
+});
+output_qrcode.makeCode(input_QRCode_ID);
+document.getElementById("output_id").innerHTML="Device ID:  "+input_QRCode_ID;
+document.getElementById("output_devicename").innerHTML="Device Name:  "+input_QRCode_DeviceName;
+
+/*
+function makeCode () {		
+	var elText = document.getElementById("text");
+	if (!elText.value) {
+		alert("Input a text");
+		elText.focus();
+		return;
+	}	
+	qrcode.makeCode(elText.value);	
+}
+makeCode();
+
+$("#text").
+	on("blur", function () {
+		makeCode();
+	}).
+	on("keydown", function (e) {
+		if (e.keyCode == 13) {
+			makeCode();
+		}
+	});
+*/
+
+
+document.querySelector('button').addEventListener('click', function() {
+
+	html2canvas(document.querySelector('.specific')).then(function(canvas) {
+		//document.body.appendChild(canvas);
+		Canvas2Image.saveAsPNG(canvas,300,400,input_QRCode_ID);		
+	});
+  
+});
+
+</script>
+
+</body>
+</html>
